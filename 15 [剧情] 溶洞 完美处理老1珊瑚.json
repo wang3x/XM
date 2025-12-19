@@ -1,0 +1,230 @@
+{
+  "EntryType": 1,
+  "DutyId": 200,
+  "TrustVersion": 0,
+  "Index": 0,
+  "DutyType": 1,
+  "FileName": null,
+  "Id": "6340d7c82e524fac84f10817aac8b2ee",
+  "AllSteps": [
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": 359.5259,
+        "Y": 45.881603,
+        "Z": -225.4176
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 1,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_Wait, Trust",
+        "TargetPoint": {
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        "TimeInSec": 2.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "确认交互哪个珊瑚",
+      "TargetPos": {
+        "X": 321.19955,
+        "Y": 47.968212,
+        "Z": -134.4084
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 9,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_Script, Trust",
+        "ScriptOrigin": "using System.Linq;\nusing System.Threading;\nusing System.Threading.Tasks;\nusing AEAssist;\nusing AEAssist.CombatRoutine.Trigger.Node;\nusing AEAssist.Helper;\nusing ECommons.DalamudServices;\nusing Trust.DungeonController.Dungeon;\n\nnamespace ScriptTest;\n\n\n\npublic class Trust_15本老1 : IStepActionScript\n{\n    public enum OID : uint\n    {\n        BloodyMemoBlue = 0x1E8554,\n        BloodyMemoRed = 0x1E8A8C,\n        BloodyMemoGreen = 0x1E8A8D,\n        CoralFormationBlue = 0x1E8555,\n        CoralFormationRed = 0x1E8556,\n        CoralFormationGreen = 0x1E8557,\n        InconspicuousSwitch = 0x1E8558,\n    }\n    public enum Switch { Unknown, Blue, Red, Green, Resolved }\n    private Switch _switchColor;\n    \n    public async Task<bool> Run(ScriptEnv env, DungeonController dungeonController, CancellationTokenSource cancellationTokenSource)\n    {\n        while (_switchColor == Switch.Unknown)\n        {\n            await Coroutine.Instance.WaitAsync(500);\n            _switchColor = (OID)(Svc.Objects.FirstOrDefault(a => a.IsTargetable && (OID)a.DataId is OID.BloodyMemoBlue or OID.BloodyMemoRed or OID.BloodyMemoGreen)?.DataId ?? 0) switch\n            {\n                OID.BloodyMemoBlue => Switch.Blue,\n                OID.BloodyMemoRed => Switch.Red,\n                OID.BloodyMemoGreen => Switch.Green,\n                _ => Switch.Unknown\n            };\n        }\n        env.KV[\"SwitchColor\"] = _switchColor;\n        LogHelper.Print($\"当前颜色: {_switchColor}\");\n        return true;\n    }\n}"
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": 64.485146,
+        "Y": 32.71607,
+        "Z": -32.405754
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 6,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_WaitForNpc, Trust",
+        "TimeOut": 15.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "交互珊瑚和Boss",
+      "TargetPos": {
+        "X": 86.67106,
+        "Y": 29.169142,
+        "Z": -41.071613
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": true,
+      "ArriveActionType": 9,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_Script, Trust",
+        "ScriptOrigin": "using System.Linq;\nusing System.Threading;\nusing System.Threading.Tasks;\nusing AEAssist;\nusing AEAssist.CombatRoutine.Trigger.Node;\nusing AEAssist.Extension;\nusing AEAssist.Helper;\nusing AEAssist.MemoryApi;\nusing ECommons.DalamudServices;\nusing Trust.DungeonController.Dungeon;\n\nnamespace ScriptTest;\n\n\n\npublic class Trust_15老1_开门 : IStepActionScript\n{\n    public enum OID : uint\n    {\n        BloodyMemoBlue = 0x1E8554,\n        BloodyMemoRed = 0x1E8A8C,\n        BloodyMemoGreen = 0x1E8A8D,\n        CoralFormationBlue = 0x1E8555,\n        CoralFormationRed = 0x1E8556,\n        CoralFormationGreen = 0x1E8557,\n        InconspicuousSwitch = 0x1E8558,\n    }\n    public enum Switch { Unknown, Blue, Red, Green, Resolved }\n    private Switch _switchColor;\n\n    public async Task<bool> Run(ScriptEnv env, DungeonController dungeonController, CancellationTokenSource cancellationTokenSource)\n    {\n        if (!env.KV.TryGetValue(\"SwitchColor\", out var switchColorObj))\n        {\n            LogHelper.PrintError(\"异常: 前面步骤没有确定该触摸哪个珊瑚\");\n            return true;\n        }\n\n        if (_switchColor == Switch.Unknown)\n        {\n            _switchColor = (Switch)switchColorObj;\n        }\n\n        uint targetDataId = 0;\n        switch (_switchColor)\n        {\n            case Switch.Blue:\n                targetDataId = (uint)OID.CoralFormationBlue;\n                break;\n            case Switch.Red:\n                targetDataId = (uint)OID.CoralFormationRed;\n                break;\n            case Switch.Green:\n                targetDataId = (uint)OID.CoralFormationGreen;\n                break;\n        }\n\n        while (true)\n        {\n\n            if (!await Coroutine.Instance.WaitAsync(1000, cancellationTokenSource))\n            {\n                return false;\n            }\n            \n            if (Core.Me.InCombat())\n            {\n                return false;\n            }\n\n            if (!Core.Resolve<MemApiTarget>().TryFindUnit(targetDataId, true, out var target))\n            {\n                continue;\n            }\n\n            // 交互珊瑚\n            if (!await dungeonController.InteractWithUnit(target, true, cancellationTokenSource))\n            {\n                LogHelper.Print($\"交互 {target.Name} 失败 跳过步骤\");\n                return true;\n            }\n            \n            LogHelper.Print($\"交互 {target.Name} 成功 准备Boss\");\n            break;\n        }\n\n\n        targetDataId = (uint)OID.InconspicuousSwitch;\n        // 交互boss\n        while (true)\n        {\n            if (!await Coroutine.Instance.WaitAsync(1000, cancellationTokenSource))\n            {\n                return false;\n            }\n            if (!Core.Resolve<MemApiTarget>().TryFindUnit(targetDataId, true, out var target))\n            {\n                continue;\n            }\n            \n            // 交互BOSS点\n            if (!await dungeonController.InteractWithUnit(target, false, cancellationTokenSource))\n            {\n                LogHelper.Print($\"交互 {target.Name} 失败 跳过步骤\");\n                return true;\n            }\n\n            return true;\n        }\n        \n        return true;\n\n    }\n    \n}"
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "开门/开箱子",
+      "TargetPos": {
+        "X": 64.485146,
+        "Y": 32.71607,
+        "Z": -32.405754
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 4,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_InteractWithUnit, Trust",
+        "UnitName": "隐藏开关",
+        "FindNearestObject": true,
+        "NeedYes": false,
+        "DurationInSec": 3.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "开门/开箱子",
+      "TargetPos": {
+        "X": 64.485,
+        "Y": 32.716,
+        "Z": -32.406
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 4,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_InteractWithUnit, Trust",
+        "UnitName": "",
+        "FindNearestObject": true,
+        "NeedYes": false,
+        "DurationInSec": 3.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -26.07793,
+        "Y": 22.509996,
+        "Z": 55.361443
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 2,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_BattleWithMonster, Trust",
+        "WaitTimeInSec": 3.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -174.19344,
+        "Y": 6.090769,
+        "Z": 245.35889
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 2,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_BattleWithMonster, Trust",
+        "WaitTimeInSec": 3.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -301.1333,
+        "Y": 5.576687,
+        "Z": 281.0377
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 3,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_CutScene, Trust"
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "拉扯NPC",
+      "TargetPos": {
+        "X": 359.526,
+        "Y": 45.882,
+        "Z": -225.418
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 6,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_WaitForNpc, Trust",
+        "TimeOut": 15.0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -332.01205,
+        "Y": 5.576687,
+        "Z": 315.8914
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 5,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_AgainstBoss, Trust",
+        "BossAreas": [],
+        "WaitTimeInSec": 10.0,
+        "BossIndex": 0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    }
+  ],
+  "OpenChestRange": 0.0,
+  "BossTriggerLines": [],
+  "MonsterSpellNeedAvoidList": [
+    {
+      "SpellId": 351,
+      "Remark": "蓄能晶须",
+      "EffectRange": 0.0,
+      "XAxisModifier": 0.0
+    },
+    {
+      "SpellId": 588,
+      "Remark": "雷孢",
+      "EffectRange": 0.0,
+      "XAxisModifier": 0.0
+    }
+  ],
+  "NeedIgnoreWhenAutoAddDangerArea": [],
+  "NeedAddDangerAreaList": [],
+  "Remark": "",
+  "TerritoryTypeId": 1036
+}

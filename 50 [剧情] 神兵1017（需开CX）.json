@@ -1,0 +1,848 @@
+{
+  "EntryType": 1,
+  "DutyId": 212,
+  "TrustVersion": 0,
+  "Index": 0,
+  "DutyType": 1,
+  "FileName": null,
+  "Id": "d4e0c3fe4526487db6bf0a086c20c2d9",
+  "AllSteps": [
+    {
+      "Remark": "开场剧情",
+      "TargetPos": {
+        "X": -758.0,
+        "Y": -400.1316,
+        "Z": 0.0
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 3,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_CutScene, Trust"
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -771.5545,
+        "Y": -400.06235,
+        "Z": -600.1567
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 5,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_AgainstBoss, Trust",
+        "BossAreas": [
+          {
+            "Remark": "",
+            "AreaShapeType": 0,
+            "AreaShape": {
+              "$type": "AEAssist.Avoid.CircleShape, AEAssist",
+              "Radius": 19.5,
+              "Origin": {
+                "X": -771.90564,
+                "Y": -400.05905,
+                "Z": -600.1018
+              },
+              "Name": null
+            }
+          }
+        ],
+        "WaitTimeInSec": 10.0,
+        "BossIndex": 0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    },
+    {
+      "Remark": "",
+      "TargetPos": {
+        "X": -705.97876,
+        "Y": -185.75963,
+        "Z": 480.00696
+      },
+      "HumanMove": false,
+      "IgnoreBattleState": false,
+      "ArriveActionType": 5,
+      "ArriveActionData": {
+        "$type": "Trust.DungeonController.Dungeon.ArriveStepAction_AgainstBoss, Trust",
+        "BossAreas": [
+          {
+            "Remark": "",
+            "AreaShapeType": 0,
+            "AreaShape": {
+              "$type": "AEAssist.Avoid.CircleShape, AEAssist",
+              "Radius": 19.5,
+              "Origin": {
+                "X": -703.9808,
+                "Y": -185.66048,
+                "Z": 479.98727
+              },
+              "Name": null
+            }
+          }
+        ],
+        "WaitTimeInSec": 60.0,
+        "BossIndex": 0
+      },
+      "ReverseDir": false,
+      "ExDistance": 0.0
+    }
+  ],
+  "OpenChestRange": 0.0,
+  "BossTriggerLines": [
+    {
+      "Remark": "1阶段",
+      "Root": {
+        "DisplayName": "Start",
+        "Childs": [
+          {
+            "$type": "AEAssist.CombatRoutine.Trigger.Node.TreeLoop, AEAssist",
+            "DisplayName": "循环 [99]次",
+            "Times": 99,
+            "Childs": [
+              {
+                "$type": "AEAssist.CombatRoutine.Trigger.Node.TreeClearWaitNode, AEAssist",
+                "OnlyPreNode": false,
+                "RangeClear": false,
+                "MinNode": 0,
+                "MaxNode": -1,
+                "DisplayName": "清理等待条件",
+                "GUID": "98b64958-66a7-4264-92b5-f776e0f630b4",
+                "Important": false,
+                "Color": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.4,
+                  "W": 1.0
+                },
+                "Id": 3,
+                "Enable": true,
+                "Remark": "每次循环开始 都要清理之前添加的监听 防止旧状态产生影响"
+              },
+              {
+                "$type": "AEAssist.CombatRoutine.Trigger.Node.TreeParallel, AEAssist",
+                "DisplayName": "并行选择",
+                "AnyReturn": true,
+                "StopWhenDead": false,
+                "Childs": [
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 28999,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 4.0,
+                        "TimeInSec": 3.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能28999",
+                    "GUID": "6293c35a-9a3b-4905-a36e-a15ea76b6c81",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 5,
+                    "Enable": true,
+                    "Remark": "大地粉碎"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 28996,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 4.0,
+                        "TimeInSec": 3.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能28996",
+                    "GUID": "7808ac33-1900-43f2-88ae-894dd51d2339",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 6,
+                    "Enable": true,
+                    "Remark": "大气爆发"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 28980,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 2.0,
+                        "TimeInSec": 2.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能28980",
+                    "GUID": "987ef79f-3cca-4b3e-a025-f0c05476006c",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 7,
+                    "Enable": true,
+                    "Remark": "台风眼"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29023,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 7,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DangerShapeExData, Trust",
+                          "AreaShapeType": 1,
+                          "AreaShape": {
+                            "$type": "AEAssist.Avoid.SectorShape, AEAssist",
+                            "Radius": 5.0,
+                            "Dir": {
+                              "X": 0.0,
+                              "Y": 0.0
+                            },
+                            "InitRotOffset": 0.0,
+                            "Angle": 20,
+                            "Origin": {
+                              "X": 1.0,
+                              "Y": 1.0,
+                              "Z": 1.0
+                            },
+                            "Name": null
+                          },
+                          "PointSelector": {
+                            "SelectType": 0,
+                            "FixedPoint": {
+                              "X": 0.0,
+                              "Y": 0.0,
+                              "Z": 0.0
+                            },
+                            "PointKey": null,
+                            "RelatedExDis": 0.0,
+                            "RelatedAngle": 0.0,
+                            "PresetGroups": [],
+                            "Args0": 0,
+                            "RecentTime": 1.0
+                          }
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 5.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29023",
+                    "GUID": "86b5f8c8-8201-4c3f-9304-9da9e23b4cdc",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 8,
+                    "Enable": true,
+                    "Remark": "诱导射线"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29009,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 7,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DangerShapeExData, Trust",
+                          "AreaShapeType": 1,
+                          "AreaShape": {
+                            "$type": "AEAssist.Avoid.SectorShape, AEAssist",
+                            "Radius": 5.0,
+                            "Dir": {
+                              "X": 0.0,
+                              "Y": 0.0
+                            },
+                            "InitRotOffset": 0.0,
+                            "Angle": 12,
+                            "Origin": {
+                              "X": 1.0,
+                              "Y": 1.0,
+                              "Z": 1.0
+                            },
+                            "Name": null
+                          },
+                          "PointSelector": {
+                            "SelectType": 0,
+                            "FixedPoint": {
+                              "X": 0.0,
+                              "Y": 0.0,
+                              "Z": 0.0
+                            },
+                            "PointKey": null,
+                            "RelatedExDis": 0.0,
+                            "RelatedAngle": 0.0,
+                            "PresetGroups": [],
+                            "Args0": 0,
+                            "RecentTime": 1.0
+                          }
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 5.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29009",
+                    "GUID": "b1c1ebef-a47b-468f-97cf-58aaa807ad11",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 9,
+                    "Enable": true,
+                    "Remark": "魔导激光"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29008,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 7,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DangerShapeExData, Trust",
+                          "AreaShapeType": 1,
+                          "AreaShape": {
+                            "$type": "AEAssist.Avoid.SectorShape, AEAssist",
+                            "Radius": 5.0,
+                            "Dir": {
+                              "X": 0.0,
+                              "Y": 0.0
+                            },
+                            "InitRotOffset": 0.0,
+                            "Angle": 10,
+                            "Origin": {
+                              "X": 1.0,
+                              "Y": 1.0,
+                              "Z": 1.0
+                            },
+                            "Name": null
+                          },
+                          "PointSelector": {
+                            "SelectType": 0,
+                            "FixedPoint": {
+                              "X": 0.0,
+                              "Y": 0.0,
+                              "Z": 0.0
+                            },
+                            "PointKey": null,
+                            "RelatedExDis": 0.0,
+                            "RelatedAngle": 0.0,
+                            "PresetGroups": [],
+                            "Args0": 0,
+                            "RecentTime": 1.0
+                          }
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 5.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29008",
+                    "GUID": "884a3288-3c68-466e-806d-9c6ccaec8512",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 10,
+                    "Enable": true,
+                    "Remark": "魔导激光"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29010,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 7,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DangerShapeExData, Trust",
+                          "AreaShapeType": 1,
+                          "AreaShape": {
+                            "$type": "AEAssist.Avoid.SectorShape, AEAssist",
+                            "Radius": 5.0,
+                            "Dir": {
+                              "X": 0.0,
+                              "Y": 0.0
+                            },
+                            "InitRotOffset": 0.0,
+                            "Angle": 10,
+                            "Origin": {
+                              "X": 1.0,
+                              "Y": 1.0,
+                              "Z": 1.0
+                            },
+                            "Name": null
+                          },
+                          "PointSelector": {
+                            "SelectType": 0,
+                            "FixedPoint": {
+                              "X": 0.0,
+                              "Y": 0.0,
+                              "Z": 0.0
+                            },
+                            "PointKey": null,
+                            "RelatedExDis": 0.0,
+                            "RelatedAngle": 0.0,
+                            "PresetGroups": [],
+                            "Args0": 0,
+                            "RecentTime": 1.0
+                          }
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 5.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29010",
+                    "GUID": "bf2aab7d-c063-4a56-83ed-3e8ea01dcfc8",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 11,
+                    "Enable": true,
+                    "Remark": "魔导激光"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29014,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 4.0,
+                        "TimeInSec": 2.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29014",
+                    "GUID": "335a28c0-c479-42a3-89e5-54fe978e86cb",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 12,
+                    "Enable": true,
+                    "Remark": "集束激光"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29012,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 0,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 4.0
+                      },
+                      {
+                        "ResolverType": 8,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DisperseExData, Trust",
+                          "Distance": 8.0
+                        },
+                        "Remark": "",
+                        "DelayInSec": 4.1,
+                        "TimeInSec": 1.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29012",
+                    "GUID": "072feb29-2dff-4aa6-87e8-f9479693976f",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 13,
+                    "Enable": true,
+                    "Remark": "自控射线"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29021,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 10.0
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29021",
+                    "GUID": "04238bf9-2b08-43cb-87cd-429f234c2e35",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 14,
+                    "Enable": true,
+                    "Remark": "核爆"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29024,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 14,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.CastSpellExData, Trust",
+                          "SpellConfigs": [
+                            {
+                              "Remark": "",
+                              "Category": 1,
+                              "SpellId": 0,
+                              "CoolDowncheck": false,
+                              "CoolDowncheck_time": 0.0,
+                              "TargetType": 0,
+                              "IsPartyMember": true,
+                              "LimitJobType": 0,
+                              "LimitBuffIds": [],
+                              "LimitMaxHpType": 0,
+                              "LimitHpType": 0,
+                              "Location": {
+                                "X": 0.0,
+                                "Y": 0.0,
+                                "Z": 0.0
+                              },
+                              "TargetSelector": {
+                                "Enable": false,
+                                "Target": 0,
+                                "FilterDatas": [],
+                                "NeedTargetable": false,
+                                "PMIndex": 0
+                              }
+                            }
+                          ]
+                        },
+                        "Remark": "究极",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 1.0
+                      },
+                      {
+                        "ResolverType": 14,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.CastSpellExData, Trust",
+                          "SpellConfigs": [
+                            {
+                              "Remark": "",
+                              "Category": 1,
+                              "SpellId": 0,
+                              "CoolDowncheck": false,
+                              "CoolDowncheck_time": 0.0,
+                              "TargetType": 0,
+                              "IsPartyMember": true,
+                              "LimitJobType": 0,
+                              "LimitBuffIds": [],
+                              "LimitMaxHpType": 0,
+                              "LimitHpType": 0,
+                              "Location": {
+                                "X": 0.0,
+                                "Y": 0.0,
+                                "Z": 0.0
+                              },
+                              "TargetSelector": {
+                                "Enable": false,
+                                "Target": 0,
+                                "FilterDatas": [],
+                                "NeedTargetable": false,
+                                "PMIndex": 0
+                              }
+                            }
+                          ]
+                        },
+                        "Remark": "2次LB",
+                        "DelayInSec": 40.0,
+                        "TimeInSec": 0.1
+                      }
+                    ],
+                    "JobsLimit": 2,
+                    "DisplayName": "机制应对:监听技能29024",
+                    "GUID": "9207b2fc-2035-40c4-8dc9-cd0a0b6711fa",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 15,
+                    "Enable": false,
+                    "Remark": "究极两次LB"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29020,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 7,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.DangerShapeExData, Trust",
+                          "AreaShapeType": 3,
+                          "AreaShape": {
+                            "$type": "AEAssist.Avoid.SectorShape, AEAssist",
+                            "Radius": 8.0,
+                            "Dir": {
+                              "X": 0.0,
+                              "Y": 0.0
+                            },
+                            "InitRotOffset": 0.0,
+                            "Angle": 10,
+                            "Origin": {
+                              "X": 1.0,
+                              "Y": 1.0,
+                              "Z": 1.0
+                            },
+                            "Name": null
+                          },
+                          "PointSelector": {
+                            "SelectType": 0,
+                            "FixedPoint": {
+                              "X": 0.0,
+                              "Y": 0.0,
+                              "Z": 0.0
+                            },
+                            "PointKey": null,
+                            "RelatedExDis": 0.0,
+                            "RelatedAngle": 0.0,
+                            "PresetGroups": [],
+                            "Args0": 0,
+                            "RecentTime": 1.0
+                          }
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 2.9
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29020",
+                    "GUID": "11e605ce-e147-4fbf-b5f3-00a7591df2bb",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 16,
+                    "Enable": true,
+                    "Remark": "攻城炮"
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29015,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 6,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.ResolverTP2FixedPos, Trust",
+                          "Pos": {
+                            "X": -691.4413,
+                            "Y": -185.53159,
+                            "Z": 466.9763
+                          },
+                          "UseCastPos": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 10.0,
+                        "TimeInSec": 2.0
+                      },
+                      {
+                        "ResolverType": 6,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.ResolverTP2FixedPos, Trust",
+                          "Pos": {
+                            "X": -692.48816,
+                            "Y": -185.53157,
+                            "Z": 491.45767
+                          },
+                          "UseCastPos": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 12.0,
+                        "TimeInSec": 4.0
+                      }
+                    ],
+                    "JobsLimit": 3,
+                    "DisplayName": "机制应对:监听技能29015",
+                    "GUID": "193bf4f2-4fae-4bd5-a03b-4662fa07f404",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 17,
+                    "Enable": true,
+                    "Remark": ""
+                  },
+                  {
+                    "$type": "Trust.DungeonController.SpellReaction.Trigger.TreeSpellResolver, Trust",
+                    "SpellId": 29021,
+                    "ResolverDatas": [
+                      {
+                        "ResolverType": 1,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.FollowNpcExData, Trust",
+                          "DontFollowTank": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 0.0,
+                        "TimeInSec": 6.0
+                      },
+                      {
+                        "ResolverType": 6,
+                        "ExData": {
+                          "$type": "Trust.DungeonController.SpellReaction.ResolverTP2FixedPos, Trust",
+                          "Pos": {
+                            "X": -705.50085,
+                            "Y": -185.65417,
+                            "Z": 478.99585
+                          },
+                          "UseCastPos": false
+                        },
+                        "Remark": "",
+                        "DelayInSec": 6.2,
+                        "TimeInSec": 1.5
+                      }
+                    ],
+                    "JobsLimit": 0,
+                    "DisplayName": "机制应对:监听技能29021",
+                    "GUID": "04238bf9-2b08-43cb-87cd-429f234c2e35",
+                    "Important": false,
+                    "Color": {
+                      "X": 1.0,
+                      "Y": 1.0,
+                      "Z": 0.4,
+                      "W": 1.0
+                    },
+                    "Id": 18,
+                    "Enable": false,
+                    "Remark": "核爆"
+                  }
+                ],
+                "GUID": "01e98975-59b2-4b19-8957-d46f82faec44",
+                "Important": true,
+                "Color": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.4,
+                  "W": 1.0
+                },
+                "Id": 4,
+                "Enable": true,
+                "Remark": "[并行选择]下的子节点同时执行,触发添加技能监听.任意一个监听被触发后，本次循环结束"
+              }
+            ],
+            "GUID": "42691b01-de0d-4029-bccc-c317e1edc0e4",
+            "Important": false,
+            "Color": {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.4,
+              "W": 1.0
+            },
+            "Id": 2,
+            "Enable": true,
+            "Remark": "循环处理（因为一般副本boss的技能都是循环的）"
+          }
+        ],
+        "GUID": "ea2fd80c-c52a-4a5a-be7e-4783fc87fd67",
+        "Important": false,
+        "Color": {
+          "X": 1.0,
+          "Y": 1.0,
+          "Z": 0.4,
+          "W": 1.0
+        },
+        "Id": 1,
+        "Enable": true,
+        "Remark": ""
+      }
+    }
+  ],
+  "MonsterSpellNeedAvoidList": [],
+  "NeedIgnoreWhenAutoAddDangerArea": [
+    {
+      "SpellId": 29012,
+      "Remark": "自控射线",
+      "EffectRange": 0.0,
+      "XAxisModifier": 0.0
+    }
+  ],
+  "NeedAddDangerAreaList": [],
+  "Remark": "究极神兵 v7   关掉自动目标选择器",
+  "TerritoryTypeId": 1048
+}
